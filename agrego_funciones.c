@@ -12,9 +12,9 @@ unsigned char obtenerDatos();
 void configuracionLCD();
 void simbolosLCD();
 
-const unsigned char simbolos[8]=
+const unsigned char simbolos[10]=
 {
-    0x07, 0x05, 0x05, 0x07, 0x00, 0x00, 0x00, 0x00
+    0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x27, 0x7F, 0x6F
 };
 
 void main()
@@ -122,7 +122,7 @@ void configuracionLCD()
 {
     disable_interrupts(GLOBAL);
     //port_B_pullups(FALSE);
-    setup_timer_0(T0_INTERNAL); //| T0_8_bit);
+    setup_timer_0(T0_INTERNAL | T0_8_BIT | T0_DIV_256); //| T0_8_bit);
     set_timer0(0);
     DHT11_init();
     lcd_init();
@@ -134,7 +134,7 @@ void simbolosLCD()
 {
     unsigned char envio = 0;
     lcd_send_byte(0, 0x40);
-    for(envio = 0; envio < 8; envio++)
+    for(envio = 0; envio < 10; envio++)
     {
         lcd_send_byte(1, simbolos[envio]);
     }
